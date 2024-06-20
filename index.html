@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="tab-prt-sec">
+        <div class="tab-header">
+            <ul>
+                <li class="active">Slider</li>
+                <li>Transition</li>
+                <li>Stopwatch</li>
+            </ul>
+
+        </div>
+        <div class="slider">
+            <div class="tab-content">
+                <div class="tab-content-inner active">
+                    <div id="tab-img-slider"  class="image" >
+                        <img src="https://placehold.jp/800x400.png?text=Image1" alt="" width="" height="">
+                        <img src="https://placehold.jp/800x400.png?text=Image2" alt="" width="" height="">
+                        <img src="https://placehold.jp/800x400.png?text=Image3" alt="" width="" height="">
+                        <img src="https://placehold.jp/800x400.png?text=Image4" alt="" width="" height="">
+                        <img src="https://placehold.jp/800x400.png?text=Image5" alt="" width="" height="">
+                    </div>
+                    <div >
+                        <input type="range" min="1" max="5" value="1" class="myslider" id="sliderrange">
+                    </div>
+                </div>
+                <div class="tab-content-inner">
+                    <div class="transition-prt">
+                        <p class="first-cont">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut minima dolore ratione atque earum consectetur, totam reiciendis incidunt, officiis adipisci nemo commodi nostrum doloremque odio neque necessitatibus repellat, sunt cumque.</p>
+                        <p class="two-cont">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut minima dolore ratione atque earum consectetur, totam reiciendis incidunt, officiis adipisci nemo commodi nostrum doloremque odio neque necessitatibus repellat, sunt cumque.</p>
+                        <p class="three-cont">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut minima dolore ratione atque earum consectetur, totam reiciendis incidunt, officiis adipisci nemo commodi nostrum doloremque odio neque necessitatibus repellat, sunt cumque.</p>
+                        <p class="four-cont">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut minima dolore ratione atque earum consectetur, totam reiciendis incidunt, officiis adipisci nemo commodi nostrum doloremque odio neque necessitatibus repellat, sunt cumque.</p>
+
+                    </div>
+                   
+                </div>
+                <div class="tab-content-inner">
+                    <div class="stopwatch">
+                        <div class="timer">
+                            <span class="mins">00:</span>
+                            <span class="seconds">00</span>
+                        </div>
+                        <div id="buttons">
+                            <button class="default-btn play_pause" id="startbtn">Play/Pause</button>
+                            <button class="default-btn stop_reset" id="resetbtn">Stop / Reset</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    $('.tab-header li').on('click', function() {
+    $(this).addClass('active').siblings().removeClass('active');
+    
+    var thisIndex = $(this).index();
+    $('.tab-content .tab-content-inner').fadeOut().removeClass('active');
+    $('.tab-content .tab-content-inner').eq(thisIndex).fadeIn().addClass('active');
+    });
+
+
+    
+    
+        </script>
+        <script>
+            window.addEventListener('load', function() {
+                var rangeslider = document.getElementById("sliderrange");
+                var images = document.getElementById("tab-img-slider");
+                rangeslider.addEventListener('input', function() {
+                    for (var i = 0; i < images.children.length; i++) {
+                        images.children[i].style.display = 'none';
+                    }
+                    i = Number(this.value) - 1;
+                    images.children[i].style.display = 'block';
+                });
+            });
+        </script>
+
+        <script>
+    let mins = 0;
+    let seconds = 0;
+    let timerInterval;
+    let isRunning = false;
+
+    const minsDisplay = document.querySelector('.mins');
+    const secondsDisplay = document.querySelector('.seconds');
+    const startBtn = document.getElementById('startbtn');
+    const resetBtn = document.getElementById('resetbtn');
+
+    startBtn.addEventListener('click', () => {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            isRunning = false;
+        } else {
+            timerInterval = setInterval(updateTimer, 1000);
+            isRunning = true;
+        }
+    });
+
+    resetBtn.addEventListener('click', () => {
+        clearInterval(timerInterval);
+        isRunning = false;
+        mins = 0;
+        seconds = 0;
+        updateDisplay();
+    });
+
+    function updateTimer() {
+        seconds++;
+        if (seconds === 60) {
+            seconds = 0;
+            mins++;
+        }
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        minsDisplay.textContent = (mins < 10 ? '0' : '') + mins + ':';
+        secondsDisplay.textContent = (seconds < 10 ? '0' : '') + seconds;
+    }
+
+
+        </script>
+</body>
+</html>
+    
